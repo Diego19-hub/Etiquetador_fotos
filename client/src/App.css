@@ -1,0 +1,435 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #f4f6f8;
+  color: #1f2937;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.app {
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 40px;
+  background: #dc2626;
+  color: white;
+  box-shadow: 0 3px 12px rgb(0 0 0 / 15%);
+}
+
+.header h1 {
+  margin: 0 0 6px;
+  font-size: 2rem;
+}
+
+.header p {
+  margin: 0;
+  opacity: 0.9;
+}
+
+.timer {
+  min-width: 130px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  background: rgb(255 255 255 / 15%);
+  text-align: center;
+}
+
+.timer span {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.timer strong {
+  font-size: 1.8rem;
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 24px;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+.characters-panel,
+.game-section {
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 8px 24px rgb(15 23 42 / 8%);
+}
+
+.characters-panel {
+  align-self: start;
+  padding: 22px;
+}
+
+.characters-panel h2 {
+  margin-top: 0;
+}
+
+.characters-list {
+  display: grid;
+  gap: 14px;
+}
+
+.character-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.character-avatar {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #dc2626;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.character-card h3 {
+  margin: 0 0 4px;
+  font-size: 1rem;
+}
+
+.character-card p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.character-found {
+  border-color: #16a34a;
+  background: #f0fdf4;
+  opacity: 0.75;
+}
+
+.character-found .character-avatar {
+  background: #16a34a;
+}
+
+.game-section {
+  min-width: 0;
+  padding: 22px;
+}
+
+.game-instructions h2 {
+  margin: 0 0 8px;
+}
+
+.game-instructions p {
+  margin: 0 0 20px;
+  color: #6b7280;
+}
+
+.image-container {
+  width: 100%;
+  overflow: auto;
+  border: 3px solid #1f2937;
+  border-radius: 12px;
+  background: #dbeafe;
+}
+
+.game-image-wrapper {
+  position: relative;
+  width: 100%;
+  line-height: 0;
+}
+
+.game-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: crosshair;
+  user-select: none;
+}
+
+.selection-menu {
+  position: absolute;
+  z-index: 10;
+  transform: translate(-30px, -30px);
+  line-height: normal;
+}
+
+.target-box {
+  width: 60px;
+  height: 60px;
+  border: 4px solid #dc2626;
+  border-radius: 8px;
+  background: rgb(255 255 255 / 20%);
+  box-shadow:
+    0 0 0 2px white,
+    0 4px 12px rgb(0 0 0 / 30%);
+}
+
+.character-options {
+  position: absolute;
+  top: 68px;
+  left: 0;
+  display: grid;
+  width: 190px;
+  overflow: hidden;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 25%);
+}
+
+.character-options button {
+  padding: 11px 14px;
+  border: 0;
+  border-bottom: 1px solid #e5e7eb;
+  background: white;
+  color: #1f2937;
+  text-align: left;
+  cursor: pointer;
+}
+
+.character-options button:hover:not(:disabled) {
+  background: #fee2e2;
+}
+
+.character-options button:disabled {
+  color: #9ca3af;
+  background: #f3f4f6;
+  cursor: not-allowed;
+}
+
+.character-options button:last-child {
+  border-bottom: 0;
+}
+
+.character-options .cancel-button {
+  color: #dc2626;
+  font-weight: bold;
+}
+
+.game-message {
+  padding: 10px 14px;
+  border-left: 4px solid #2563eb;
+  border-radius: 6px;
+  background: #eff6ff;
+  color: #1e3a8a;
+}
+
+@media (max-width: 850px) {
+  .header {
+    padding: 20px;
+  }
+
+  .main-content {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .characters-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .character-card {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .timer {
+    width: 100%;
+  }
+
+  .characters-list {
+    grid-template-columns: 1fr;
+  }
+
+  .image-placeholder {
+    min-height: 450px;
+  }
+}
+
+.status-screen {
+  display: grid;
+  place-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  text-align: center;
+}
+
+.error-message {
+  padding: 10px 14px;
+  border-left: 4px solid #dc2626;
+  border-radius: 6px;
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.validating-message {
+  padding: 10px 14px;
+  border-left: 4px solid #d97706;
+  border-radius: 6px;
+  background: #fffbeb;
+  color: #92400e;
+}
+
+.completion-message {
+  margin-bottom: 20px;
+  padding: 18px;
+  border: 2px solid #16a34a;
+  border-radius: 12px;
+  background: #f0fdf4;
+  color: #166534;
+}
+
+.completion-message h3 {
+  margin: 0 0 8px;
+}
+
+.completion-message p {
+  margin: 0;
+}
+
+.timer small {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+.calibration-button {
+  margin-bottom: 16px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: #1f2937;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.calibration-button:hover {
+  background: #111827;
+}
+
+.calibration-panel {
+  margin-bottom: 18px;
+  padding: 14px;
+  border: 2px dashed #2563eb;
+  border-radius: 10px;
+  background: #eff6ff;
+  color: #1e3a8a;
+}
+
+.calibration-panel p {
+  margin: 8px 0;
+}
+
+.calibration-panel code {
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: white;
+  color: #111827;
+}
+
+.score-form {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.score-form label {
+  font-weight: bold;
+}
+
+.score-form input {
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+}
+
+.score-form button {
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: #16a34a;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.score-form button:hover {
+  background: #15803d;
+}
+
+.leaderboard {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.leaderboard h2 {
+  margin-top: 0;
+}
+
+.leaderboard ol {
+  margin: 0;
+  padding-left: 30px;
+}
+
+.leaderboard li {
+  padding: 8px;
+}
+
+.leaderboard li span {
+  margin-right: 20px;
+}
+
+.leaderboard li strong {
+  float: right;
+}
+
+.restart-button {
+  width: 100%;
+  margin-top: 14px;
+  padding: 11px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.restart-button:hover {
+  background: #1d4ed8;
+}

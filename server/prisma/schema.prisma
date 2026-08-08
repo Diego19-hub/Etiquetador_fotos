@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Scene {
+  id         Int         @id @default(autoincrement())
+  name       String
+  imageUrl   String
+  createdAt  DateTime    @default(now())
+  characters Character[]
+  games      Game[]
+}
+
+model Character {
+  id        Int      @id @default(autoincrement())
+  name      String
+  imageUrl  String?
+  xMin      Float
+  xMax      Float
+  yMin      Float
+  yMax      Float
+  createdAt DateTime @default(now())
+
+  sceneId Int
+  scene   Scene @relation(fields: [sceneId], references: [id], onDelete: Cascade)
+
+  foundCharacters FoundCharacter[]
+
+  @@unique([sceneId, name])
+}
+
+model Game {
+  id         String    @id @default(uuid())
+  playerName String?
+  startedAt  DateTime  @default(now())
+  finishedAt DateTime?
+  durationMs Int?
+  completed  Boolean   @default(false)
+
+  sceneId Int
+  scene   Scene @relation(fields: [sceneId], references: [id], onDelete: Cascade)
+
+  foundCharacters FoundCharacter[]
+}
+
+model FoundCharacter {
+  id      Int      @id @default(autoincrement())
+  foundAt DateTime @default(now())
+
+  gameId String
+  game   Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  characterId Int
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  @@unique([gameId, characterId])
+}
